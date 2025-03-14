@@ -60,4 +60,6 @@ dependencies {
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
     implementation("com.google.android.material:material:1.6.1")
+
+    implementation("com.makeramen:roundedimageview:2.3.0")
 }

@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public boolean loginStatus = true;
     Button btn;
     ImageSlider image_slider;
     ImageView categories,cart,more,setting;
@@ -97,8 +98,13 @@ public class MainActivity extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cart = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(cart);
+                if(loginStatus == true){
+                    Intent cart = new Intent(MainActivity.this, CartActivity.class);
+                    startActivity(cart);
+                } else {
+                    Intent loginCart = new Intent(MainActivity.this, LoginScreen.class);
+                    startActivity(loginCart);
+                }
             }
         });
 
@@ -113,8 +119,14 @@ public class MainActivity extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(settings);
+                if(loginStatus == true){
+                    Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(settings);
+                } else{
+                    Intent loginSettings = new Intent(MainActivity.this, LoginScreen.class);
+                    startActivity(loginSettings);
+                }
+
             }
         });
 
