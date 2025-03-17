@@ -1,24 +1,57 @@
 package com.example.ecommerce;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.GridView;
+import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity {
+
+    private GridView gridVew;
+    private ProductAdapter adapter;
+    private List<Product> productList;
+
+    ImageView imageView22;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_categories);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        imageView22 = findViewById(R.id.imageView22);
+        imageView22.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
         });
+
+        gridVew = findViewById(R.id.gridView);
+        productList = new ArrayList<>();
+        adapter = new ProductAdapter(this,productList);
+        gridVew.setAdapter(adapter);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("phones")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                            Product product = documentSnapshot.toObject(Product.class);
+                            productList.add(product);
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.w("Firestore", "Error getting documents.", task.getException());
+                    }
+                });
     }
 }

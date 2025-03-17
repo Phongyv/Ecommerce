@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -47,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_Ecommerce);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        //render image
+        ImageView imageView20 = findViewById(R.id.imageView20);
+        String url = "https://cdn.tgdd.vn/Products/Images/42/335177/samsung-galaxy-a56-5g-xanh-thumbai-600x600.jpg"; // Thay đổi URL tại đây
+        Glide.with(this)
+                .load(url)
+                .into(imageView20);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -63,15 +72,6 @@ public class MainActivity extends AppCompatActivity {
         slideModels.add(new SlideModel(R.drawable.slide9, ScaleTypes.FIT));
         image_slider.setImageList(slideModels);
 
-        GridView gridView = findViewById(R.id.gridView);
-        // Danh sách các mục
-        List<String> items = Arrays.asList("Ithhh 1", "Item 2", "Item 3", "Item 4","hfem5");
-        GridAdapter adapter = new GridAdapter(this, items);
-        gridView.setAdapter(adapter);
-        // Bạn có thể thiết lập Listener nếu cần
-        gridView.setOnItemClickListener((parent, view, position, id) -> {
-            // Xử lý sự kiện click ở đây
-        });
 
         categories = findViewById(R.id.imageView3);
         cart = findViewById(R.id.imageView8);
