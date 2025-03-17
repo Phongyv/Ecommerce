@@ -56,6 +56,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-firestore:24.6.0")
+    implementation("com.google.firebase:firebase-auth:21.0.1")
     implementation("com.google.firebase:firebase-analytics")
 
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")

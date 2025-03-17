@@ -2,6 +2,7 @@ package com.example.ecommerce;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,13 +31,14 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    public boolean loginStatus = true;
+    private FirebaseAuth mAuth;
     Button btn;
     ImageSlider image_slider;
     ImageView categories,cart,more,setting;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_Ecommerce);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
 
         //render image
         ImageView imageView20 = findViewById(R.id.imageView20);
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent viewAll =new Intent(MainActivity.this,CategoriesActivity.class);
                 startActivity(viewAll);
+
             }
         });
 
@@ -92,18 +97,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent categories = new Intent(MainActivity.this, CategoriesActivity.class);
                 startActivity(categories);
+
             }
         });
 
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loginStatus == true){
+                if(mAuth.getCurrentUser()!=null){
                     Intent cart = new Intent(MainActivity.this, CartActivity.class);
                     startActivity(cart);
+
                 } else {
                     Intent loginCart = new Intent(MainActivity.this, LoginScreen.class);
                     startActivity(loginCart);
+
                 }
             }
         });
@@ -113,23 +121,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent more = new Intent(MainActivity.this, MoreActivity.class);
                 startActivity(more);
+
             }
         });
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loginStatus == true){
+                if(mAuth.getCurrentUser()!=null){
                     Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivity(settings);
+
                 } else{
                     Intent loginSettings = new Intent(MainActivity.this, LoginScreen.class);
                     startActivity(loginSettings);
+
                 }
 
             }
         });
-
     }
 
 }
